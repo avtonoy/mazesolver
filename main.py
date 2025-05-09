@@ -1,5 +1,6 @@
 from drawing import Line, Window, Point
-from geometry import Cell, Maze
+from geometry import Cell
+from maze import Maze
 
 
 def main():
