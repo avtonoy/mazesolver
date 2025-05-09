@@ -1,11 +1,16 @@
 from tkinter import Tk, BOTH, Canvas
 
+class Point(): 
+    def __init__(self,x:int,y:int):
+        self.x = x
+        self.y = y
+
 class Line():
-    def __init__(self, p1: tuple[int], p2: tuple[int]) -> None:
-        self.x1 = p1[0]
-        self.y1 = p1[1]
-        self.x2 = p2[0]
-        self.y2 = p2[1]
+    def __init__(self, p1: Point, p2: Point) -> None:
+        self.x1 = p1.x
+        self.y1 = p1.y
+        self.x2 = p2.x
+        self.y2 = p2.y
 
     def draw(self, canvas: Canvas, fill_color: str = 'black') -> None:
         x1 = self.x1
