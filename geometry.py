@@ -31,6 +31,7 @@ class Cell():
 
         self._has_wall_color = 'black'
         self._has_no_wall_color = 'white'
+        self.visited = False
 
     def draw(self) -> None:
 
