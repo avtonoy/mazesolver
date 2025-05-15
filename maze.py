@@ -56,6 +56,13 @@ class Maze():
         self._draw_cell(0, 0)
         self._draw_cell(-1, -1)
         
+    def _reset_cells_visited(self):
+        ln_i=self._num_cols
+        ln_j=self._num_rows
+        for i in range(ln_i): 
+            for j in range(ln_j): 
+                self._cells[i][j].visited = False
+    
     def _get_neighbours_visitable(self,i,j) -> list[tuple[int,int,str]]:
         visitable = []
         # left

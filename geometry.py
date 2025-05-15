@@ -34,7 +34,7 @@ class Cell():
         self.visited = False
 
     def draw(self) -> None:
-
+        if self._win == None: return 
         if self.has_left_wall:
             color = self._has_wall_color
         else:
