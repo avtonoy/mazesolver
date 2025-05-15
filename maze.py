@@ -66,7 +66,7 @@ class Maze():
         # top
         x = j - 1
         if x >= self._min_j: 
-            if self._cells[i][x] == False:
+            if self._cells[i][x].visited == False:
                 visitable.append((i,x,'top'))         
         # right
         x = i + 1
