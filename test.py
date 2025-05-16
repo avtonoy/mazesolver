@@ -45,6 +45,14 @@ class Tests(unittest.TestCase):
             for j in range(num_rows):
                 self.assertFalse(m1._cells[i][j].visited)
 
+    def test_solve_maze(self):
+        num_cols = 20
+        num_rows = 20
+        seed = 5
+        m1 = Maze(Point(0, 0), num_rows, num_cols, 10,
+                  10, win=None, seed_for_random=seed)
+        self.assertTrue(m1.solve())
+
 
 if __name__ == "__main__":
     unittest.main()

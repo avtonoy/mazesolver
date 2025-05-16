@@ -47,7 +47,7 @@ class Maze():
                     pos_x+self._cell_size_x, pos_y + self._cell_size_y)
 
                 self._cells[i].append(
-                    Cell(left_top_corner, right_bottom_corner, self._win))
+                    Cell(left_top_corner, right_bottom_corner, self._win, i=i, j=j))
                 self._draw_cell(i, j)
 
     def _break_entrance_and_exit(self):
@@ -90,6 +90,27 @@ class Maze():
                 visitable.append((i, x, 'bottom'))
         return visitable
 
+    def _get_neighbours_wall_visitable(self, current_cell: Cell) -> list[Cell]:
+        (i, j) = (current_cell._i, current_cell._j)
+        cells_not_visited = self._get_neighbours_visitable(i, j)
+        cells_to_visit = []
+        for cell in cells_not_visited:
+            match cell[2]:
+                case 'top':
+                    if current_cell.has_top_wall:
+                        continue
+                case 'bottom':
+                    if current_cell.has_bottom_wall:
+                        continue
+                case 'left':
+                    if current_cell.has_left_wall:
+                        continue
+                case 'right':
+                    if current_cell.has_right_wall:
+                        continue
+            cells_to_visit.append(self._cells[cell[0]][cell[1]])
+        return cells_to_visit
+
     def _knock_down_wall(self, current_cell: Cell, choosen_cell: Cell, direction: str):
         match direction:
             case 'top':
@@ -122,6 +143,26 @@ class Maze():
             current_cell.draw()
             self._animate()
             self._break_walls_r(picked_to_visit[0], picked_to_visit[1])
+
+    def solve(self) -> bool:
+        self._reset_cells_visited()
+        start_cell = self._cells[0][0]
+        return self._solve_r(start_cell)
+
+    def _solve_r(self, current_cell: Cell) -> bool:
+        self._animate()
+        current_cell.visited = True
+        if (current_cell._i, current_cell._j) == self._end_maze:
+            return True
+        cells_to_visit = self._get_neighbours_wall_visitable(current_cell)
+        if len(cells_to_visit) == 0:
+            return False
+        for cell in cells_to_visit:
+            current_cell.draw_move(cell, undo=False)
+            if self._solve_r(cell):
+                return True
+            else:
+                current_cell.draw_move(cell, undo=True)
 
     def _draw_cell(self, i, j):
         if self._win != None:

@@ -9,8 +9,9 @@ class Cell():
                  has_left_wall: bool = True,
                  has_right_wall: bool = True,
                  has_top_wall: bool = True,
-                 has_bottom_wall: bool = True
-                 ):
+                 has_bottom_wall: bool = True,
+                 i: int = None,
+                 j: int = None):
         self._left_top_corner = left_top_corner
         self._right_bottom_corner = right_bottom_corner
         self._left_bottom_corner = Point(
@@ -32,6 +33,9 @@ class Cell():
         self._has_wall_color = 'black'
         self._has_no_wall_color = 'white'
         self.visited = False
+
+        self._i = i
+        self._j = j
 
     def draw(self) -> None:
         if self._win == None:
@@ -65,9 +69,11 @@ class Cell():
             Line(self._left_bottom_corner, self._right_bottom_corner), color)
 
     def draw_move(self, to_cell, undo: bool = False):
+
         if undo:
             color = 'gray'
         else:
             color = 'red'
         l = Line(self._mid, to_cell._mid)
-        self._win.draw_line(l, color)
+        if self._win != None:
+            self._win.draw_line(l, color)
